@@ -26,6 +26,7 @@ function getKidneyStatus() {
   return h;
 }
 
+//get no of kidneys
 app.get("/", (req, res) => {
   let n = users[0].kidneys.length;
   //   res.send(
@@ -39,6 +40,8 @@ app.get("/", (req, res) => {
     n, healthy, unhealthy
   });
 });
+
+//install kidneys
 app.post("/", (req, res) => { 
     const isHealthy  = req.body.isHealthy;
     users[0].kidneys.push({
