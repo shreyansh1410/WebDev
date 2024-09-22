@@ -2,8 +2,9 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const jwtPassword = "123456";
+require('dotenv').config();
 
-const uri = "mongodb+srv://shreyansh14010:uXL6AnD8NAV9GCfs@cluster0.ejqqv.mongodb.net/myDatabase?retryWrites=true&w=majority";
+const uri = process.env.MONGODB_URI;
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
@@ -54,6 +55,13 @@ app.post("/signup", async (req, res) => {
 
 // Uncomment and fix the other routes if needed
 // ...
+
+app.post("/signin", function (req, res) {
+  const {email, password} = req.body;
+  
+
+  
+});
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");
