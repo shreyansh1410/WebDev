@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <input
+      oninput="debouncePopulateDiv()"
+      id="first"
+      type="text"
+      placeholder="First Name"
+    />
+    <br />
+    <br />
+    <input
+      oninput="debouncePopulateDiv()"
+      id="second"
+      type="text"
+      placeholder="Last Name"
+    />
+    <br /><br />
+    <!-- <button onclick="populateDiv()">Calculate Sum</button> -->
+    <br /><br />
+    <div id="finalSum">Hi</div>
+  </body>
+  <script>
+    let timeout;
+    function debouncePopulateDiv() {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        populateDiv();
+      }, 100);
+    }
+    async function populateDiv() {
+      const num1 = document.getElementById("first").value;
+      const num2 = document.getElementById("second").value;
+
+      const response = await axios.get(
+        "https://api.mathjs.org/v4/?expr=" + num1 + "+%2B+" + num2
+      );
+      // console.log(response);
+      const ans = await response.data;
+      console.log(ans);
+      document.getElementById("finalSum").innerHTML = ans;
+      // document.getElementById("finalSum").innerHTML=parseInt(num1) + parseInt(num2);
+    }
+  </script>
+</html>

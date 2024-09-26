@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      // Global variable to assign unique identifiers to each todo
+      let globalId = 1;
+      let todoState = [];
+
+      function markAsDone(todoId) {
+        const parent = document.getElementById(todoId);
+        parent.children[2].innerHTML = "Done!";
+      }
+
+      function createChild(title, description, id) {
+        const outerDiv = document.createElement("div");
+        const titleDiv = document.createElement("div");
+        titleDiv.innerHTML = title;
+        const descDiv = document.createElement("div");
+        descDiv.innerHTML = description;
+        const buttonDiv = document.createElement("button");
+        buttonDiv.innerHTML = "Mark as done";
+        buttonDiv.setAttribute("onclick", `markAsDone(${id})`);
+        //   buttonDiv.onclick = function () {
+        // if (buttonDiv.innerHTML === "Mark as done")
+        //   alert("Task marked as done!");
+        // else alert("Task is already completed!");
+        // buttonDiv.innerHTML = "Done!";
+        //   };
+        outerDiv.appendChild(titleDiv);
+        outerDiv.appendChild(descDiv);
+        outerDiv.appendChild(buttonDiv);
+        outerDiv.setAttribute("id", id);
+
+        return outerDiv;
+      }
+
+      function updateState(state) {
+        //dumb way:
+        const parent = document.getElementById("todos");
+        parent.innerHTML = "";
+        for (let i = 0; i < state.length; i++) {
+          const child = createChild(
+            state[i].title,
+            state[i].description,
+            state[i].id
+          );
+          parent.appendChild(child);
+        }
+      }
+      
+      // Function to add a new todo to the state
+      function addTodo() {
+        // Initialize an empty array to store todos
+        // Get values from input fields
+        const title = document.getElementById("title").value;
+        const description = document.getElementById("description").value;
+
+        // Add a new todo object to the state array
+        todoState.push({
+          title: title,
+          description: description,
+          id: globalId++,
+        });
+
+        // Call the function to update the state and render the todos
+        updateState(todoState);
+      }
+
+    /*
+        state will be an array;
+        every element of state will have title, description and id;
+    */
+    </script>
+  </head>
+
+  <body>
+    <!-- Input fields for todo title and description -->
+    <input type="text" id="title" placeholder="Todo title" /> <br /><br />
+    <input type="text" id="description" placeholder="Todo description" />
+    <br /><br />
+
+    <!-- Button to trigger the addTodo function -->
+    <button onclick="addTodo()">Add todo</button>
+
+    <!-- Container to display the list of todos -->
+    <div id="todos"></div>
+  </body>
+</html>

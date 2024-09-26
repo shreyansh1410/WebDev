@@ -56,10 +56,18 @@ app.post("/signup", async (req, res) => {
 // Uncomment and fix the other routes if needed
 // ...
 
-app.post("/signin", function (req, res) {
-  const {email, password} = req.body;
-  
+app.post("/signin", async (req, res) => {
+  const {name} = req.body;
+  const existingUser = await User.findOne({ email: email });
 
+  if(!existingUser){
+    return res.status(403).json({message:"user not found"});
+  }
+
+  var token = jwt.sign({ name: name }, jwtPassword);
+  return res.json({
+    token,
+  });
   
 });
 

@@ -53,6 +53,7 @@ app.post("/signin", function (req, res) {
   return res.json({
     token,
   });
+
 });
 
 app.get("/users", function (req, res) {
@@ -68,4 +69,4 @@ app.get("/users", function (req, res) {
   }
 });
 
-app.listen(3000)
+app.listen(3000);

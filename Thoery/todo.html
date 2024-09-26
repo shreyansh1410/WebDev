@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" name="title" id="tit" placeholder="title" />
+    <input type="text" name="description" id="desc" placeholder="description" />
+    <!-- <button onclick="addtodo()">Add Todo</button> -->
+    <!-- <button onclick="updateDomAccToState(state)">start</button> -->
+    <div id="container"></div>
+  </body>
+  <script>
+    let globalId = 4;
+
+    function markAsDone(todoId) {
+      const parent = document.getElementById(todoId);
+      parent.children[2].innerHTML = "Done!";
+    }
+
+    function createChild(title, description, id) {
+      const outerDiv = document.createElement("div");
+      const titleDiv = document.createElement("div");
+      titleDiv.innerHTML = title;
+      const descDiv = document.createElement("div");
+      descDiv.innerHTML = description;
+      const buttonDiv = document.createElement("button");
+      buttonDiv.innerHTML = "Mark as done";
+      buttonDiv.setAttribute("onclick", `markAsDone(${id})`);
+      //   buttonDiv.onclick = function () {
+      // if (buttonDiv.innerHTML === "Mark as done")
+      //   alert("Task marked as done!");
+      // else alert("Task is already completed!");
+      // buttonDiv.innerHTML = "Done!";
+      //   };
+      outerDiv.appendChild(titleDiv);
+      outerDiv.appendChild(descDiv);
+      outerDiv.appendChild(buttonDiv);
+      outerDiv.setAttribute("id", id);
+
+      return outerDiv;
+    }
+
+    /*
+    state will be an array;
+    every element of state will have title, description and id;
+    */
+
+    // const state = [
+    //   { id: 1, title: "Buy groceries", description: "Milk, Eggs, Bread" },
+    //   { id: 2, title: "Complete project", description: "Finish the report" },
+    //   { id: 3, title: "Workout", description: "Go to the gym at 6 PM" },
+    // ];
+
+    // function updateDomAccToState(state) {
+    //   //dumb way:
+    //   const parent = document.getElementById("container");
+    //   parent.innerHTML = "";
+    //   for (let i = 0; i < state.length; i++) {
+    //     const child = createChild(
+    //       state[i].title,
+    //       state[i].description,
+    //       state[i].id
+    //     );
+    //     parent.appendChild(child);
+    //   }
+    // }
+
+    // window.setInterval(async function () {
+    //   const res = await fetch("http://localhost:3000/todos");
+    //   const json = await res.json();
+    //   updateDomAccToState(json);
+    // }, 5000);
+
+    // updateDomAccToState(state);
+
+    function addtodo() {
+      const title = document.getElementById("tit").value;
+      const description = document.getElementById("desc").value;
+      const parent = document.getElementById("container");
+      parent.appendChild(createChild(title, description, globalId++));
+      //   document.getElementById("container").appendChild(outerDiv);
+    }
+    // function markDone() {}
+  </script>
+</html>
