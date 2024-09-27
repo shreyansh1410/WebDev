@@ -1,9 +1,25 @@
 import express from "express";
-const PORT = 8800;
 const app = express();
 
-app.get("/", (req, res) => {
-    res.send("Hi!");
-})
+app.use(express.json());
 
-app.listen(PORT)
+const PORT = process.env.PORT || 8800;
+
+app.get("/", (req, res) => {
+  res.send("Hi!");
+});
+
+/*
+title: string
+description: string
+*/
+
+app.post("/todo", (req, res) => {});
+
+app.get("/todos", (req, res) => {});
+
+app.put("/completed", (req, res) => {});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
