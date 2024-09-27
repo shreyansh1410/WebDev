@@ -1,4 +1,4 @@
-import zod from "zod";
+const zod = require("zod");
 
 const createToDo = zod.object({
   title: zod.string(),
