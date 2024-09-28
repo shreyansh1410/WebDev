@@ -1,9 +1,11 @@
 const express = require("express");
 const { createToDo, updateToDo } = require("./types");
-const app = express();
 const { todo } = require("./db");
+const cors = require("cors");
+const app = express();
 
 app.use(express.json());
+app.use(cors({ origin: "http://localhost:5173" }));
 
 const PORT = process.env.PORT || 8800;
 
