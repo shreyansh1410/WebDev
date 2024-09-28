@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const CreateTodo = () => {
+const CreateTodo = ({fetchTodos}) => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
 
@@ -13,6 +13,7 @@ const CreateTodo = () => {
       });
       if (response.status === 200) {
         alert("Todo added successfully!");
+        fetchTodos();
       }
     } catch (error) {
       console.error("Failed to add todo:", error);
