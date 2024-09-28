@@ -1,17 +1,14 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
+import HeaderTitleBS from "./components/HeaderTitleBS";
+import Todo from "./components/Todo";
 
 function App() {
   return (
-    <div>
-      <Header title="harkirat"></Header>
-      <Header title="harkirat"></Header>
-    </div>
+    <>
+      <Todo />
+    </>
   );
 }
-
-const Header = ({ title }) => {
-  return <div>{title}</div>;
-};
 
 export default App;
