@@ -1,22 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RenderTodo from "./RenderTodo";
+import axios from "axios";
 
 const Todo = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [todo, setTodo] = useState([
     {
-      id: 1,
+      id: 99,
       title: "Go to gym",
       description: "At 7pm",
     },
     {
-      id: 2,
+      id: 100,
       title: "Go to market",
       description: "At 9pm",
     },
     {
-      id: 3,
+      id: 120,
       title: "Go to restaurant",
       description: "At 10pm",
     },
@@ -32,6 +33,22 @@ const Todo = () => {
     setTitle("");
     setDesc("");
   }
+
+  async function fetchTodos() {
+    const response = await axios.get("http://localhost:3000/todos");
+    const res = await response.data;
+    console.log(res);
+    setTodo([...todo, ...res]);
+  }
+
+  useEffect(() => {
+    fetchTodos();
+    let x = setInterval(() => {
+      fetchTodos();
+    }, 5000);
+
+    // return ()=>clearInterval(x);
+  }, []);
 
   return (
     <div>
