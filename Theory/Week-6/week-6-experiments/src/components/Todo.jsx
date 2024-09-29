@@ -5,53 +5,114 @@ import axios from "axios";
 const Todo = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [todo, setTodo] = useState([
-    {
-      id: 99,
-      title: "Go to gym",
-      description: "At 7pm",
-    },
-    {
-      id: 100,
-      title: "Go to market",
-      description: "At 9pm",
-    },
-    {
-      id: 120,
-      title: "Go to restaurant",
-      description: "At 10pm",
-    },
-  ]);
+  const [todoId, setTodoId] = useState("");
+  const [buttonClicked, setButtonClicked] = useState("");
+  const [todo, setTodo] = useState([]);
+
+  async function buttonClickHandler() {
+    if (!buttonClicked) return;
+    const response = await axios.get(
+      `http://localhost:3000/todo?id=${parseInt(buttonClicked)}`
+    );
+    const res = await response.data;
+    console.log(res.todo);
+    setTodo([res.todo]);
+  }
 
   function addTodoHandler() {
     const newtodo = {
-      id: todo.length + 1,
       title: title,
       description: desc,
     };
-    setTodo([...todo, newtodo]);
+    setTodo([...todo, newtodo]); // Add the new todo to the state
     setTitle("");
     setDesc("");
   }
 
+  async function getTodoById() {
+    if (!todoId) {
+      console.log("Please provide a valid todo ID");
+      return;
+    }
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/todo?id=${todoId}`
+      );
+      const res = response.data;
+      //   console.log(res.todo);
+      setTodo([res.todo]); // Set the fetched todo by ID
+    } catch (error) {
+      console.error("Error fetching todo by ID:", error);
+    }
+  }
+
   async function fetchTodos() {
-    const response = await axios.get("http://localhost:3000/todos");
-    const res = await response.data;
-    console.log(res);
-    setTodo([...todo, ...res]);
+    try {
+      const response = await axios.get("http://localhost:3000/todos");
+      const res = response.data;
+      setTodo([...todo, ...res]); // Append the fetched todos to the current list
+    } catch (error) {
+      console.error("Error fetching todos:", error);
+    }
   }
 
   useEffect(() => {
-    fetchTodos();
-    let x = setInterval(() => {
-      fetchTodos();
-    }, 5000);
+    buttonClickHandler();
+  }, [buttonClicked]);
 
-    // return ()=>clearInterval(x);
-  }, []);
+  //   useEffect(() => {
+  //     getTodoById();
+  //   }, [todoId]);
+
+  //   useEffect(() => {
+  //     fetchTodos();
+  //     const intervalId = setInterval(() => {
+  //       fetchTodos();
+  //     }, 5000);
+
+  //     return () => clearInterval(intervalId); // Clean up interval on component unmount
+  //   }, []);
 
   return (
     <div>
+      <button
+        onClick={() => {
+          setButtonClicked(1);
+        }}
+      >
+        1
+      </button>
+      <button
+        onClick={() => {
+          setButtonClicked(2);
+        }}
+      >
+        2
+      </button>
+      <button
+        onClick={() => {
+          setButtonClicked(3);
+        }}
+      >
+        3
+      </button>
+      <button
+        onClick={() => {
+          setButtonClicked(4);
+        }}
+      >
+        4
+      </button>
+      <button
+        onClick={() => {
+          setButtonClicked(5);
+        }}
+      >
+        5
+      </button>
+      <br />
+      <br />
+
       <input
         type="text"
         name="title"
@@ -77,7 +138,24 @@ const Todo = () => {
       <br />
       <br />
       <button onClick={addTodoHandler}>Add todo</button>
-      <RenderTodo todo={todo} />
+      <br />
+      <br />
+      <input
+        type="text"
+        name="todobyid"
+        id="tdobyid"
+        placeholder="Enter todo id"
+        value={todoId}
+        onChange={(e) => setTodoId(e.target.value)}
+      />
+      <br />
+      <br />
+      {/* <button onClick={getTodoById}>Get Todo By ID</button> */}
+      {todo.length === 0 ? (
+        <p>No todos available</p>
+      ) : (
+        <RenderTodo todo={todo} />
+      )}
     </div>
   );
 };

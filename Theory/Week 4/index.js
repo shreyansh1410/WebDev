@@ -15,16 +15,16 @@ app.get("/sum", (req, res) => {
   res.send((num1 + num2).toString()); // Convert the result to string before sending
 });
 
+const todos = [
+  { id: 1, title: "Buy groceries", description: "Milk, Eggs, Bread" },
+  { id: 2, title: "Complete project", description: "Finish the report" },
+  { id: 3, title: "Workout", description: "Go to the gym at 6 PM" },
+  { id: 4, title: "Read a book", description: "Finish the novel" },
+  { id: 5, title: "Cook dinner", description: "Prepare pasta for dinner" },
+];
+
 // Helper function to generate random todos
 function getRandomTodos() {
-  const todos = [
-    { id: 1, title: "Buy groceries", description: "Milk, Eggs, Bread" },
-    { id: 2, title: "Complete project", description: "Finish the report" },
-    { id: 3, title: "Workout", description: "Go to the gym at 6 PM" },
-    { id: 4, title: "Read a book", description: "Finish the novel" },
-    { id: 5, title: "Cook dinner", description: "Prepare pasta for dinner" },
-  ];
-
   // Get a random number of todos (1 to 5)
   const randomCount = Math.floor(Math.random() * todos.length) + 1;
 
@@ -37,6 +37,12 @@ function getRandomTodos() {
 app.get("/todos", (req, res) => {
   const randomTodos = getRandomTodos();
   res.json(randomTodos);
+});
+
+//fetch todo with a given id
+app.get("/todo", (req, res) => {
+  const todo = todos.find((t) => t.id === parseInt(req.query.id));
+  res.json({ todo });
 });
 
 app.listen(PORT, () => {
