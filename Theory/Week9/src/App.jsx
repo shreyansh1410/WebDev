@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import React from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 // import MyComponent from './components/MyComponent'
 
@@ -9,28 +7,54 @@ function App() {
   const [count, setCount] = useState(0);
   const [show, setShow] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setShow(false);
-    }, 10000);
-  }, []);
+  // useEffect(() => {
+  // setInterval(() => {
+  //   setShow(!show);
+  // }, 2000);
+  // }, []);
 
-  return <div>{show && <MyComponent />}</div>;
+  // return <div>{show && <MyComponent />}</div>;
+
+  return<div className="text-4xl bg-cyan-300">Curency App</div>
 }
 
-function MyComponent() {
-  useEffect(() => {
+// Functional Component
+
+// function MyComponent() {
+//   useEffect(() => {
+//     // Perform setup or data fetching here
+//     console.log("component mounted");
+//     return () => {
+//       // Cleanup code (similar to componentWillUnmount)
+//       console.log("component unmounted");
+//     };
+//   }, []);
+
+//   // Render UI
+//   return <div>From inside the component</div>;
+// }
+
+
+//Class Based Component
+
+class MyComponent extends React.Component {
+  componentDidMount() {
     // Perform setup or data fetching here
-    console.log("component mounted");
-    return () => {
-      // Cleanup code (similar to componentWillUnmount)
-      console.log("component unmounted");
-    };
-  }, []);
+    console.log("mounted");
+  }
 
-  // Render UI
-  return <div>From inside the component</div>;
+  componentWillUnmount() {
+    // Clean up (e.g., remove event listeners or cancel subscriptions)
+    console.log("unmounted");
+  }
+
+  render() {
+    // Render UI
+    return<div>Component</div>
+  }
 }
+
+
 
 //class based component
 
